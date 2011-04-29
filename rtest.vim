@@ -9,19 +9,28 @@ endif
 let loaded_rtest = 1
 
 function OpenTest (filename, before_cmd)
-	let testfile = substitute(a:filename, 'app/', 'spec/', '')
+	let l:testfile = substitute(a:filename, 'app/', 'spec/', '')
+	let l:testfile = substitute(l:testfile, '.rb', '_spec.rb', '')
+	if stridx(testfile, 'lib/') >= 0
+		let l:testfile = 'spec/' . l:testfile
+	endif
 	if !empty(a:before_cmd)
 		exe a:before_cmd
 	endif
-	exe ':e ' . testfile
+	exe ':e ' . l:testfile
 endfunction
 
 function OpenImplementation (filename, before_cmd)
-	let testfile = substitute(a:filename, 'spec/', 'app/', '')
+	if stridx(a:filename, 'lib/') >= 0
+		let l:testfile = substitute(a:filename, 'spec/', '', '')
+	else
+	  let l:testfile = substitute(a:filename, 'spec/', 'app/', '')
+	endif
+	let l:testfile = substitute(l:testfile, '_spec.rb', '.rb', '')
 	if !empty(a:before_cmd)
 		exe a:before_cmd
 	endif
-	exe ':e ' . testfile
+	exe ':e ' . l:testfile
 endfunction
 
 function RunTests(filename)
