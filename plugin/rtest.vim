@@ -1,7 +1,6 @@
-" Description: rtest.vim - Some basic functionality for navigating between spec & 
-"  implementation in rspec
+" Description: rtest.vim - Some basic functionality for navigating between spec & implementation in rspec
 " Author:      Michael Thelander <mjthelander@gmail.com>
-" License:      This file is placed in the public domain
+" License:     This file is placed in the public domain
 
 if exists('g:loaded_rtest')
   finish
@@ -39,7 +38,7 @@ function GetTestFile()
   let filename = CurrentFilename()
   if stridx(filename, '/spec/') < 0
     let l:testfile = substitute(filename, '/app/', '/spec/', '')
-    let l:testfile = substitute(filename, '/lib/', '/spec/lib/', '')
+    let l:testfile = substitute(l:testfile, '/lib/', '/spec/lib/', '')
     let l:testfile = substitute(l:testfile, '.rb', '_spec.rb', '')
     return l:testfile
   endif
